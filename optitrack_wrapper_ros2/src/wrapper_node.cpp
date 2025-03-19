@@ -2,6 +2,8 @@
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<optitrack_wrapper::OptitrackWrapper>());
+  auto OptitrackWrapper = std::make_shared<optitrack_wrapper::OptitrackWrapper>();
+  OptitrackWrapper->SetupNatNet();
+  rclcpp::spin(OptitrackWrapper);
   rclcpp::shutdown();
 }

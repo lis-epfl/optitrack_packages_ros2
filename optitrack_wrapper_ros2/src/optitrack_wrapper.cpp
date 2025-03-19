@@ -33,24 +33,26 @@ OptitrackWrapper::OptitrackWrapper() : ::rclcpp::Node("optitrack_wrapper") {
   mocap_data_publisher_ =
       create_publisher<::optitrack_wrapper_ros2_msgs::msg::FrameOfMocapData>(
           "~/" + topic_frame_data_, 0);
+}
 
-  // initialize client
-  InitializeClient();
+void OptitrackWrapper::SetupNatNet() { 
+   // initialize client
+   InitializeClient();
 
-  // initialize client params
-  InitializeClientParams();
-
-  // connect optitrack
-  ConnectOptitrack();
-
-  // get data descriptions
-  GetDataDescriptions();
-
-  // create data description message
-  CreateDataDescriptionsMessage();
-
-  // initialize frame data msg
-  frame_data_msg_ = ::optitrack_wrapper_ros2_msgs::msg::FrameOfMocapData();
+   // initialize client params
+   InitializeClientParams();
+ 
+   // connect optitrack
+   ConnectOptitrack();
+ 
+   // get data descriptions
+   GetDataDescriptions();
+ 
+   // create data description message
+   CreateDataDescriptionsMessage();
+ 
+   // initialize frame data msg
+   frame_data_msg_ = ::optitrack_wrapper_ros2_msgs::msg::FrameOfMocapData();
 }
 
 void NATNET_CALLCONV ProcessFrameCallback(sFrameOfMocapData *data,
@@ -83,25 +85,6 @@ void OptitrackWrapper::GetDataDescriptionsService(
 }
 
 void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
-  const int MAX_TRIES = 10; 
-  int tryno = 0; 
-  auto shared_ptr = weak_from_this().lock(); 
-
-  while(!shared_ptr && tryno < MAX_TRIES) {
-    shared_ptr = weak_from_this().lock();
-    tryno++;
-    RCLCPP_INFO(get_logger(), "Could not get shared pointer for node, try %d/%d", tryno + 1, MAX_TRIES);
-    rclcpp::sleep_for(std::chrono::milliseconds(50));
-  }
-
-  if(!shared_ptr) {
-    // we could not get the pointer, fail. 
-    RCLCPP_ERROR(get_logger(), "Could not get the shared pointer at all, exiting");
-    rclcpp::shutdown();
-    exit(1);
-  }
-
-
   // Start measuring time
   auto processing_time_begin = ::std::chrono::high_resolution_clock::now();
 
@@ -266,7 +249,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
   for (int i = 0; i < data->nMarkerSets; i++) {
     ::optitrack_wrapper_ros2_msgs::msg::MarkerSetData marker_set_data =
         ::optitrack_wrapper::GetMarkerSetDataMessage(
-            &data->MocapData[i], shared_ptr, verbose_frame_);
+            &data->MocapData[i], shared_from_this(), verbose_frame_);
 
     frame_data_msg.marker_set_data.push_back(marker_set_data);
   }
@@ -295,7 +278,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
   for (int i = 0; i < data->nRigidBodies; i++) {
     ::optitrack_wrapper_ros2_msgs::msg::RigidBodyData rigid_body_data =
         ::optitrack_wrapper::GetRigidBodyDataMessage(
-            &data->RigidBodies[i], shared_ptr, verbose_frame_);
+            &data->RigidBodies[i], shared_from_this(), verbose_frame_);
 
     frame_data_msg.rigid_bodies.push_back(rigid_body_data);
   }
@@ -309,7 +292,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
   for (int i = 0; i < data->nSkeletons; i++) {
     ::optitrack_wrapper_ros2_msgs::msg::SkeletonData skeleton_data =
         ::optitrack_wrapper::GetSkeletonDataMessage(
-            &data->Skeletons[i], shared_ptr, verbose_frame_);
+            &data->Skeletons[i], shared_from_this(), verbose_frame_);
 
     frame_data_msg.skeletons.push_back(skeleton_data);
   }
@@ -326,7 +309,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
   for (int i = 0; i < data->nLabeledMarkers; i++) {
     ::optitrack_wrapper_ros2_msgs::msg::Marker labeled_marker =
         ::optitrack_wrapper::GetLabeledMarkerMessage(
-            &data->LabeledMarkers[i], shared_ptr, verbose_frame_);
+            &data->LabeledMarkers[i], shared_from_this(), verbose_frame_);
     frame_data_msg.labeled_markers.push_back(labeled_marker);
   }
 
@@ -340,7 +323,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
     ::optitrack_wrapper_ros2_msgs::msg::ForcePlateData force_plate_data =
         ::optitrack_wrapper::GetForcePlateDataMessage(
             &data->ForcePlates[i], analog_samples_per_mocap_frame_,
-            shared_ptr, verbose_frame_);
+            shared_from_this(), verbose_frame_);
 
     frame_data_msg.force_plates.push_back(force_plate_data);
   }
@@ -355,7 +338,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
     ::optitrack_wrapper_ros2_msgs::msg::DeviceData device_data =
         ::optitrack_wrapper::GetDeviceDataMessage(
             &data->Devices[i], analog_samples_per_mocap_frame_,
-            shared_ptr, verbose_frame_);
+            shared_from_this(), verbose_frame_);
 
     frame_data_msg.devices.push_back(device_data);
   }
