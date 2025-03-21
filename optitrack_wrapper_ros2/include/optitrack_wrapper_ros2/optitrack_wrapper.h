@@ -29,8 +29,11 @@ public:
   // NATNET_CALLCONV
   void ProcessFrame(sFrameOfMocapData *data);
 
+  void SetupNatNet();
+
 private:
   /*---------- class methods ----------*/
+
 
   // declare ros connection parameters
   void DeclareRosParameters();
