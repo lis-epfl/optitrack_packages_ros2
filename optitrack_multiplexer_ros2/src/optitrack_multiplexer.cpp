@@ -449,6 +449,8 @@ void OptitrackMultiplexer::InitializeRosParameters() {
                                topic_unlabeled_markers_);
   get_parameter<bool>("verbose", verbose_);
 
+  RCLCPP_INFO(get_logger(), "Rigid body names: %s", rigid_body_names.c_str());
+
   // generate name vectors: from one string delimted by a comma ',' to an array
   rigid_body_name_vec_ = GetStringArray(rigid_body_names);
   skeleton_name_vec_ = GetStringArray(skeleton_names);
