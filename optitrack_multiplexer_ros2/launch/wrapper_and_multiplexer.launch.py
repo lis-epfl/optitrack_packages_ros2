@@ -6,26 +6,9 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 
-def generate_launch_description():
 
-    # Declare the rigid_body_names argument
-    rigid_body_names_arg = DeclareLaunchArgument(
-        'rigid_body_names',
-        default_value='',  # Default value as an empty list
-        description='List of rigid body names'
-    )
+def get_nodes(server_address, rigid_body_names): 
 
-    rigid_body_names = LaunchConfiguration('rigid_body_names')
-
-    server_address_arg = DeclareLaunchArgument(
-        'server_address',
-        default_value=''
-    )
-    server_address = LaunchConfiguration('server_address')
-
-    ld = LaunchDescription()
-
-    # Create the NatNet client node
     config_wrapper = os.path.join(
         get_package_share_directory('optitrack_wrapper_ros2'),
         'config',
@@ -54,6 +37,31 @@ def generate_launch_description():
         output='screen',
         emulate_tty=True
     )
+
+    return optitrack_wrapper, optitrack_multiplexer
+
+def generate_launch_description():
+
+    # Declare the rigid_body_names argument
+    rigid_body_names_arg = DeclareLaunchArgument(
+        'rigid_body_names',
+        default_value='',  # Default value as an empty list
+        description='List of rigid body names'
+    )
+
+    rigid_body_names = LaunchConfiguration('rigid_body_names')
+
+    server_address_arg = DeclareLaunchArgument(
+        'server_address',
+        default_value=''
+    )
+    server_address = LaunchConfiguration('server_address')
+
+    ld = LaunchDescription()
+
+    # Create the NatNet client node
+    optitrack_wrapper, optitrack_multiplexer = get_nodes(server_address, rigid_body_names)
+   
 
     # Add the argument and nodes to the launch description
     ld.add_action(rigid_body_names_arg)
