@@ -11,6 +11,7 @@
 #include "rclcpp/rclcpp.hpp"
 
 #include <chrono>
+#include <exception>
 
 namespace optitrack_multiplexer {
 

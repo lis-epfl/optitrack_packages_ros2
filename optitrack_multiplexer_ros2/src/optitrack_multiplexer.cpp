@@ -250,9 +250,13 @@ void OptitrackMultiplexer::DataDescriptionsResponseCallback(
 
   auto status = future.wait_for(::std::chrono::seconds(1));
   if (status == ::std::future_status::ready) {
-    // store the data descriptions
-    data_descriptions_ = future.get()->data_descriptions;
-    data_descriptions_ready_ = true;
+    try {
+      // store the data descriptions
+      data_descriptions_ = future.get()->data_descriptions;
+      data_descriptions_ready_ = true;
+    } catch (const std::exception& e) {
+      RCLCPP_ERROR(get_logger(), "Failed to get data descriptions asynchronously: %s", e.what());
+    }
   }
 }
 
@@ -436,8 +440,12 @@ void OptitrackMultiplexer::GetDataDescriptionsSync() {
   }
   
   if (result.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-    data_descriptions_ = result.get()->data_descriptions;
-    data_descriptions_ready_ = true;
+    try {
+      data_descriptions_ = result.get()->data_descriptions;
+      data_descriptions_ready_ = true;
+    } catch (const std::exception& e) {
+      RCLCPP_ERROR(get_logger(), "Failed to get data descriptions: %s", e.what());
+    }
   } else {
     RCLCPP_ERROR(get_logger(), "Timeout waiting for data descriptions response after 30 seconds.");
   }
