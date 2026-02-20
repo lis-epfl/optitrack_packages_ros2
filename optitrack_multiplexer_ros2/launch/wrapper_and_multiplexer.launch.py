@@ -45,7 +45,7 @@ def generate_launch_description():
     # Declare the rigid_body_names argument
     rigid_body_names_arg = DeclareLaunchArgument(
         'rigid_body_names',
-        default_value='',  # Default value as an empty list
+        default_value='XFly',  # Default value as an empty list
         description='List of rigid body names'
     )
 
@@ -53,7 +53,7 @@ def generate_launch_description():
 
     server_address_arg = DeclareLaunchArgument(
         'server_address',
-        default_value=''
+        default_value='192.168.194.3'
     )
     server_address = LaunchConfiguration('server_address')
 
@@ -65,6 +65,7 @@ def generate_launch_description():
 
     # Add the argument and nodes to the launch description
     ld.add_action(rigid_body_names_arg)
+    ld.add_action(server_address_arg)
     ld.add_action(optitrack_wrapper)
     ld.add_action(optitrack_multiplexer)
 

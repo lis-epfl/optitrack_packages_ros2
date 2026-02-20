@@ -10,7 +10,7 @@ optitrack_multiplexer_node:
     # no spaces in the name (I remove all the spaces in the 
     # string before I process it), separate using underscore;
     # the names should be seperated by a comma (", " also works)
-    rigid_body_names: "mavros"
+    rigid_body_names: "XFly"
     # names of the skeletons we want to stream;
     # no spaces in the name (I remove all the spaces in the 
     # string before I process it), separate using underscore;
