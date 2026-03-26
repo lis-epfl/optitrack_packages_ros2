@@ -8,13 +8,13 @@ int32 id
 int32 parent_id
 
 # offset position relative to parent
-Point offset
+geometry_msgs/Point offset
 
 # number of markers associated with this rigid body
 int32 n_markers
 
 # array of marker locations ( [n_markers][3] )
-Point[] marker_positions
+geometry_msgs/Point[] marker_positions
 
 # array of expected marker active labels - 0 if not specified. ( [n_markers] )
 int32[] marker_required_labels

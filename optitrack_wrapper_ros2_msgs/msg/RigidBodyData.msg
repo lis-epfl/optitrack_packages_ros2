@@ -4,7 +4,7 @@
 int32 id
 
 # pose
-Pose pose
+geometry_msgs/Pose pose
 
 # mean measure-to-solve deviation
 float32 mean_error

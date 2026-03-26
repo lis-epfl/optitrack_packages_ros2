@@ -2,4 +2,4 @@
 string name
 
 # camera pose
-Pose pose
+geometry_msgs/Pose pose

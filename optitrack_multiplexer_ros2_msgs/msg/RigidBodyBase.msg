@@ -8,7 +8,7 @@ int32 id
 int32 parent_id
 
 # rigid body pose
-optitrack_wrapper_ros2_msgs/Pose pose
+geometry_msgs/Pose pose
 
 # if the rigid body pose is visible/is being tracked
 bool tracking_valid

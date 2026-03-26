@@ -354,10 +354,10 @@ void OptitrackMultiplexer::PublishTf(
   t.transform.translation.x = rigid_body.pose.position.x;
   t.transform.translation.y = rigid_body.pose.position.y;
   t.transform.translation.z = rigid_body.pose.position.z;
-  t.transform.rotation.x = rigid_body.pose.orientation.q_x;
-  t.transform.rotation.y = rigid_body.pose.orientation.q_y;
-  t.transform.rotation.z = rigid_body.pose.orientation.q_z;
-  t.transform.rotation.w = rigid_body.pose.orientation.q_w;
+  t.transform.rotation.x = rigid_body.pose.orientation.x;
+  t.transform.rotation.y = rigid_body.pose.orientation.y;
+  t.transform.rotation.z = rigid_body.pose.orientation.z;
+  t.transform.rotation.w = rigid_body.pose.orientation.w;
 
   tf_broadcaster_->sendTransform(t);
 }

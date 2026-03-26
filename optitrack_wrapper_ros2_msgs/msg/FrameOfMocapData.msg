@@ -14,7 +14,7 @@ MarkerSetData[] marker_set_data
 int32 n_other_markers
 
 # undefined markers data
-Point[] other_markers
+geometry_msgs/Point[] other_markers
 
 # number of rigid bodies
 int32 n_rigid_bodies

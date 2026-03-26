@@ -6,4 +6,4 @@ int32 n_markers
 
 # array of marker data ( [n_markers][3] )
 # marker positions x, y, z
-Point[] markers
+geometry_msgs/Point[] markers

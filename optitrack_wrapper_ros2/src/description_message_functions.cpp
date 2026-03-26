@@ -31,7 +31,7 @@ GetRigidBodyDescriptionMessage(sRigidBodyDescription *p_rb) {
   if (p_rb->MarkerPositions != NULL && p_rb->MarkerRequiredLabels != NULL) {
     for (int marker_idx = 0; marker_idx < p_rb->nMarkers; ++marker_idx) {
       // create position for marker
-      ::optitrack_wrapper_ros2_msgs::msg::Point marker_position;
+      geometry_msgs::msg::Point marker_position;
       marker_position.x = p_rb->MarkerPositions[marker_idx][0];
       marker_position.y = p_rb->MarkerPositions[marker_idx][1];
       marker_position.z = p_rb->MarkerPositions[marker_idx][2];
@@ -125,10 +125,10 @@ GetCameraDescriptionMessage(sCameraDescription *p_camera) {
   camera_description.pose.position.x = p_camera->x;
   camera_description.pose.position.y = p_camera->y;
   camera_description.pose.position.z = p_camera->z;
-  camera_description.pose.orientation.q_x = p_camera->qx;
-  camera_description.pose.orientation.q_y = p_camera->qy;
-  camera_description.pose.orientation.q_z = p_camera->qz;
-  camera_description.pose.orientation.q_w = p_camera->qw;
+  camera_description.pose.orientation.x = p_camera->qx;
+  camera_description.pose.orientation.y = p_camera->qy;
+  camera_description.pose.orientation.z = p_camera->qz;
+  camera_description.pose.orientation.w = p_camera->qw;
   return camera_description;
 }
 } // namespace optitrack_wrapper

@@ -16,7 +16,7 @@ GetMarkerSetDataMessage(sMarkerSetData *p_ms,
   }
 
   for (int i = 0; i < p_ms->nMarkers; i++) {
-    ::optitrack_wrapper_ros2_msgs::msg::Point point;
+    geometry_msgs::msg::Point point;
     point.x = p_ms->Markers[i][0];
     point.y = p_ms->Markers[i][1];
     point.z = p_ms->Markers[i][2];
@@ -45,10 +45,10 @@ GetRigidBodyDataMessage(sRigidBodyData *p_rb,
   rigid_body_data.pose.position.x = p_rb->x;
   rigid_body_data.pose.position.y = p_rb->y;
   rigid_body_data.pose.position.z = p_rb->z;
-  rigid_body_data.pose.orientation.q_x = p_rb->qx;
-  rigid_body_data.pose.orientation.q_y = p_rb->qy;
-  rigid_body_data.pose.orientation.q_z = p_rb->qz;
-  rigid_body_data.pose.orientation.q_w = p_rb->qw;
+  rigid_body_data.pose.orientation.x = p_rb->qx;
+  rigid_body_data.pose.orientation.y = p_rb->qy;
+  rigid_body_data.pose.orientation.z = p_rb->qz;
+  rigid_body_data.pose.orientation.w = p_rb->qw;
   rigid_body_data.mean_error = p_rb->MeanError;
 
   if (verbose) {

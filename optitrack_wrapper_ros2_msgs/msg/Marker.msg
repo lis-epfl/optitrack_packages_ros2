@@ -10,7 +10,7 @@ int32 model_id
 int32 marker_id
 
 # position
-Point position
+geometry_msgs/Point position
 
 # marker size
 float32 size                             
