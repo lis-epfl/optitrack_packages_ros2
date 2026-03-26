@@ -64,7 +64,7 @@ uint64 transmit_timestamp
 # latency between camera mid exposure and camera data recieved (in ms)
 float64 latency_camera_mid_exposure_to_data_received_ms
 
-# latency between camera camera data recieved and transmission (in ms) 
+# latency between camera camera data recieved and transmission (in ms)
 float64 latency_camera_data_received_to_transmission_ms
 
 # latency to transmit to NatNet client (in ms)

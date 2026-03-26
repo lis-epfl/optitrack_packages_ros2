@@ -1,8 +1,8 @@
 # time of publication
 builtin_interfaces/Time stamp
 
-# frame number 
-int32 frame 
+# frame number
+int32 frame
 
 # skeleton id
 int32 id

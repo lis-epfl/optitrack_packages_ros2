@@ -4,7 +4,7 @@ builtin_interfaces/Time stamp
 # frame number
 int32 frame
 
-# unlabeled markers id: 
+# unlabeled markers id:
 # unlabeled markers can change IDs any time the trajectory is broken
 int32[] id
 

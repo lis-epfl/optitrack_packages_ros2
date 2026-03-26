@@ -19,7 +19,7 @@ float32[144] cal_mat
 # plate corners, in world (aka Mocap System) coordinates, clockwise from plate +x,+y (refer to C3D spec for details); the dimension is [4][3] to [12] with the same method as cal_mat
 float32[12] corners
 
-# force plate 'type' (refer to C3D spec for details) 
+# force plate 'type' (refer to C3D spec for details)
 int32 plate_type
 
 # 0=Calibrated force data, 1=Raw analog voltages
