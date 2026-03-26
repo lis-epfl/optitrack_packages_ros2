@@ -1,7 +1,7 @@
 # unique identifier:
 # for active markers (LED light), this is the Active ID. For passive markers (reflective spheres), this is the PointCloud assigned ID.
 # for legacy assets that are created prior to 2.0, this is both AssetID (High-bit) and Member ID (Lo-bit)
-int32 id 
+int32 id
 
 # model id
 int32 model_id
@@ -10,13 +10,13 @@ int32 model_id
 int32 marker_id
 
 # position
-Point position
+geometry_msgs/Point position
 
 # marker size
-float32 size                             
+float32 size
 
 
-# host defined parameters. 
+# host defined parameters.
 # 0 : Occluded: if the marker is not visible by the cameras
 bool occluded
 
@@ -42,4 +42,4 @@ bool established
 bool measurement
 
 # marker error residual, in mm/ray i.e. the smallest distance between the ray and the final triangulated position of the marker
-float32 residual                        
+float32 residual

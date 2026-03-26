@@ -1,5 +1,5 @@
-# time of publication
-builtin_interfaces/Time stamp
+# header stamp contains the time of capture
+std_msgs/Header header
 
 # frame number
 int32 frame

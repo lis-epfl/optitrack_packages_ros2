@@ -227,7 +227,7 @@ void OptitrackWrapper::ProcessFrame(sFrameOfMocapData *data) {
   }
 
   for (int i = 0; i < data->nOtherMarkers; i++) {
-    ::optitrack_wrapper_ros2_msgs::msg::Point point;
+    geometry_msgs::msg::Point point;
     point.x = data->OtherMarkers[i][0];
     point.y = data->OtherMarkers[i][1];
     point.z = data->OtherMarkers[i][2];

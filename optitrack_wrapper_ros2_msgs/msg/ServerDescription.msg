@@ -1,4 +1,4 @@
-# host is present and accounted for 
+# host is present and accounted for
 bool host_present
 
 # host computer name
@@ -7,7 +7,7 @@ string host_computer_name
 # host IP address
 uint8[4] host_computer_address
 
-# name of host app 
+# name of host app
 string host_app
 
 # version of host app

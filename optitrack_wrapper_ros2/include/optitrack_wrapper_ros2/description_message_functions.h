@@ -5,9 +5,6 @@
 #include "optitrack_wrapper_ros2_msgs/msg/device_description.hpp"
 #include "optitrack_wrapper_ros2_msgs/msg/force_plate_description.hpp"
 #include "optitrack_wrapper_ros2_msgs/msg/marker_set_description.hpp"
-#include "optitrack_wrapper_ros2_msgs/msg/point.hpp"
-#include "optitrack_wrapper_ros2_msgs/msg/pose.hpp"
-#include "optitrack_wrapper_ros2_msgs/msg/quaternion.hpp"
 #include "optitrack_wrapper_ros2_msgs/msg/rigid_body_description.hpp"
 #include "optitrack_wrapper_ros2_msgs/msg/skeleton_description.hpp"
 

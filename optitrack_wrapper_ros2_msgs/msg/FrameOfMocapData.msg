@@ -14,7 +14,7 @@ MarkerSetData[] marker_set_data
 int32 n_other_markers
 
 # undefined markers data
-Point[] other_markers
+geometry_msgs/Point[] other_markers
 
 # number of rigid bodies
 int32 n_rigid_bodies
@@ -64,7 +64,7 @@ uint64 transmit_timestamp
 # latency between camera mid exposure and camera data recieved (in ms)
 float64 latency_camera_mid_exposure_to_data_received_ms
 
-# latency between camera camera data recieved and transmission (in ms) 
+# latency between camera camera data recieved and transmission (in ms)
 float64 latency_camera_data_received_to_transmission_ms
 
 # latency to transmit to NatNet client (in ms)

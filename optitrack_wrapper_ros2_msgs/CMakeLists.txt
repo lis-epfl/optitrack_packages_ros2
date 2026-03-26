@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(builtin_interfaces REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 set(MSG_FILES
   "msg/AnalogChannelData.msg"
@@ -22,9 +23,6 @@ set(MSG_FILES
   "msg/Marker.msg"
   "msg/MarkerSetData.msg"
   "msg/MarkerSetDescription.msg"
-  "msg/Point.msg"
-  "msg/Pose.msg"
-  "msg/Quaternion.msg"
   "msg/RigidBodyData.msg"
   "msg/RigidBodyDescription.msg"
   "msg/ServerDescription.msg"
@@ -40,7 +38,7 @@ set(SRV_FILES
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${MSG_FILES}
   ${SRV_FILES}
-  DEPENDENCIES builtin_interfaces
+  DEPENDENCIES builtin_interfaces geometry_msgs
  )
 
 ament_package()
