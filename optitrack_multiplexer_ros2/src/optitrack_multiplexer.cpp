@@ -219,7 +219,7 @@ void OptitrackMultiplexer::FrameDataCallback(
       ::optitrack_multiplexer_ros2_msgs::msg::RigidBodyStamped
           rigid_body_stamped_msg = rigid_body_stamped_msgs[i];
 
-      rigid_body_stamped_msg.stamp = capture_time;
+      rigid_body_stamped_msg.header.stamp = capture_time;
       rigid_body_stamped_msg.frame = frame_data->frame;
       rigid_body_stamped_msg.latency_ms = total_pipeline_latency;
 
@@ -236,7 +236,7 @@ void OptitrackMultiplexer::FrameDataCallback(
 
       ::optitrack_multiplexer_ros2_msgs::msg::SkeletonStamped
           skeleton_stamped_msg = skeleton_stamped_msgs[i];
-      skeleton_stamped_msg.stamp = capture_time;
+      skeleton_stamped_msg.header.stamp = capture_time;
       skeleton_stamped_msg.frame = frame_data->frame;
       skeleton_stamped_msg.latency_ms = total_pipeline_latency;
 
@@ -252,7 +252,7 @@ void OptitrackMultiplexer::FrameDataCallback(
 
     // publish unlabeled markers
     if (unlabeled_markers_stamped_msg.positions.size() != 0) {
-      unlabeled_markers_stamped_msg.stamp = now();
+      unlabeled_markers_stamped_msg.header.stamp = now();
       unlabeled_markers_stamped_msg.frame = frame_data->frame;
       unlabeled_markers_stamped_msg.latency_ms = total_pipeline_latency;
       unlabeled_markers_publisher_->publish(unlabeled_markers_stamped_msg);
