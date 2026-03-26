@@ -266,9 +266,13 @@ void OptitrackMultiplexer::DataDescriptionsResponseCallback(
 
   auto status = future.wait_for(::std::chrono::seconds(1));
   if (status == ::std::future_status::ready) {
-    // store the data descriptions
-    data_descriptions_ = future.get()->data_descriptions;
-    data_descriptions_ready_ = true;
+    try {
+      // store the data descriptions
+      data_descriptions_ = future.get()->data_descriptions;
+      data_descriptions_ready_ = true;
+    } catch (const std::exception& e) {
+      RCLCPP_ERROR(get_logger(), "Failed to get data descriptions asynchronously: %s", e.what());
+    }
   }
 }
 
@@ -454,9 +458,33 @@ void OptitrackMultiplexer::GetDataDescriptionsSync() {
   }
 
   auto result = data_descriptions_client_->async_send_request(request);
-  ::rclcpp::spin_until_future_complete(this->get_node_base_interface(), result);
-  data_descriptions_ = result.get()->data_descriptions;
-  data_descriptions_ready_ = true;
+  
+  // Wait for the result with timeout, checking rclcpp::ok() periodically
+  const auto timeout = std::chrono::seconds(30); // Total timeout for getting data descriptions
+  const auto check_interval = std::chrono::milliseconds(100); // Check interval for rclcpp::ok()
+  auto start_time = std::chrono::steady_clock::now();
+  
+  while (rclcpp::ok() && 
+         result.wait_for(check_interval) != std::future_status::ready &&
+         (std::chrono::steady_clock::now() - start_time) < timeout) {
+    // Continue waiting while ROS is ok and result isn't ready and timeout not reached
+  }
+  
+  if (!rclcpp::ok()) {
+    RCLCPP_ERROR(get_logger(), "Interrupted while waiting for data descriptions response. Exiting.");
+    return;
+  }
+  
+  if (result.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+    try {
+      data_descriptions_ = result.get()->data_descriptions;
+      data_descriptions_ready_ = true;
+    } catch (const std::exception& e) {
+      RCLCPP_ERROR(get_logger(), "Failed to get data descriptions: %s", e.what());
+    }
+  } else {
+    RCLCPP_ERROR(get_logger(), "Timeout waiting for data descriptions response after 30 seconds.");
+  }
 }
 
 void OptitrackMultiplexer::DeclareRosParameters() {

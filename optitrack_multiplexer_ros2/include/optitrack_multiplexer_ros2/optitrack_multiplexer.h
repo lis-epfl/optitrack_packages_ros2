@@ -13,6 +13,7 @@
 #include "tf2_ros/transform_broadcaster.h"
 
 #include <chrono>
+#include <exception>
 
 namespace optitrack_multiplexer {
 
